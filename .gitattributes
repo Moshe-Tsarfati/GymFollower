@@ -1,3 +1,2 @@
-.html linguist-detectable=true 
-.scss linguist-detectable=js 
-.css linguist-detectable=true 
+*.scss linguist-detectable=JavaScript
+
