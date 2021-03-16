@@ -1,2 +1,2 @@
-*.scss linguist-detectable=JavaScript
-
+* linguist-vendored
+*.js linguist-vendored=false
