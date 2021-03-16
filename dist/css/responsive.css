@@ -1,0 +1,248 @@
+@charset "UTF-8";
+/* min: 320 px */
+@media (max-width: 768px) {
+  #tools h3 {
+    font-size: 1.3rem !important;
+  }
+  #tools .w-75 {
+    width: 85% !important;
+  }
+  #settings .setting label {
+    font-size: 1rem;
+  }
+  #settings .setting input {
+    width: 100px;
+  }
+  #myplan #tp-main .row {
+    all: unset;
+    display: flex;
+  }
+  #myplan #tp-main .row .program-name {
+    min-width: 200px;
+  }
+  #myplan #tp-main .row .program-name .content {
+    padding: 0;
+  }
+  #myplan #tp-main .row .program-name p {
+    margin-bottom: 0;
+    max-width: 180px;
+  }
+  #myplan #tp-main .row .day {
+    min-width: 150px;
+  }
+  #myplan #tp-main .row .day .content {
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+  }
+  #myplan #tp-main .row .day::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #17a2b8;
+    color: white;
+  }
+  #myplan #tp-main .row .day p {
+    margin: 0;
+  }
+  #myplan #tp-main .row .mon::before {
+    content: "Monday";
+  }
+  #myplan #tp-main .row .tues::before {
+    content: "Tuesday";
+  }
+  #myplan #tp-main .row .wed::before {
+    content: "Wednesday";
+  }
+  #myplan #tp-main .row .thurs::before {
+    content: "Thursday";
+  }
+  #myplan #tp-main .row .fri::before {
+    content: "Friday";
+  }
+  #myplan #tp-main .row .sat::before {
+    content: "Saturday";
+  }
+  #myplan #tp-main .row .sun::before {
+    content: "Sunday";
+  }
+  #navbar-main {
+    padding: 0.5rem 1rem !important;
+  }
+  #navbar-main #timers {
+    display: flex;
+    flex-wrap: wrap;
+    width: 400px;
+    padding: 0;
+  }
+  #navbar-main #timers .row {
+    flex-direction: column;
+  }
+  #navbar-main #timers .row .col-4,
+  #navbar-main #timers .row .dropdown-item {
+    max-width: initial;
+    padding: 1rem 2rem;
+  }
+  #navbar-main #timers .dropdown-divider {
+    display: none;
+  }
+  #navbar-main #timers .timer-actions {
+    border-top: 1px solid rgba(128, 128, 128, 0.378);
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+  }
+  #navbar-main #timers .timer-actions #delete-timer-btn {
+    width: initial;
+  }
+  #navbar-main #timers .timer-actions #add-timer-btn {
+    width: initial;
+  }
+  #myplan #headingOne {
+    padding: 1rem;
+  }
+  #myplan #music.py-4 {
+    padding: 0 !important;
+  }
+  #myplan #music h3 {
+    text-align: center;
+  }
+  #myplan #music div {
+    width: fit-content;
+    margin: 0 auto;
+  }
+  #myplan #collapseThree .card-body .row:first-child > :not(:first-child) {
+    display: none;
+  }
+  #myplan #collapseThree .card-body .row:first-child:first-child {
+    text-align: center;
+    padding: 0.5rem;
+  }
+  #myplan #collapseThree .card-body .mp-workout .col-md-3 {
+    border: none;
+  }
+  #myplan #collapseThree .card-body .mp-workout .mp-exrs,
+  #myplan #collapseThree .card-body .mp-workout .mp-sts,
+  #myplan #collapseThree .card-body .mp-workout .mp-trs {
+    border: none;
+    position: relative;
+  }
+  #myplan #collapseThree .card-body .mp-workout .mp-exrs::before,
+  #myplan #collapseThree .card-body .mp-workout .mp-sts::before,
+  #myplan #collapseThree .card-body .mp-workout .mp-trs::before {
+    font-size: 1.2rem;
+    color: #17a2b8;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  #myplan #collapseThree .card-body .mp-workout .col-md-1 {
+    width: 50%;
+    border: none;
+  }
+  #myplan #collapseThree .card-body .mp-workout .mp-exrs,
+  #myplan #collapseThree .card-body .mp-workout .mp-trs {
+    width: 45%;
+  }
+  #myplan #collapseThree .card-body .mp-workout .mp-sts {
+    width: 10%;
+  }
+  #myplan #collapseThree .card-body .mp-workout .mp-exrs::before {
+    content: " Exercises";
+  }
+  #myplan #collapseThree .card-body .mp-workout .mp-sts::before {
+    content: " Sets";
+  }
+  #myplan #collapseThree .card-body .mp-workout .mp-trs::before {
+    content: " Notes";
+  }
+  #myplan #collapseThree .card-body [data-workout-xs] {
+    cursor: pointer;
+    text-align: center;
+    padding: 0.5rem;
+    margin: 0.5rem auto;
+    border: 1px solid black !important;
+    border-radius: 5px;
+    background: #17a2b8;
+    font-weight: bold;
+    color: white;
+  }
+  #myplan #collapseThree .card-body [data-workout-xs]::after {
+    content: "▼";
+    position: absolute;
+    top: 8px;
+    font-family: "Font Awesome 5 Free";
+    right: 10px;
+  }
+  #myplan #collapseThree .card-body [data-workout-xs]:hover {
+    opacity: 0.8;
+  }
+  #create-new-workout .display-4 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  #workout-window.w-75 {
+    width: fit-content !important;
+  }
+  .workout-list .warm-up li {
+    font-size: 1rem;
+  }
+  .workout-list .exercise .set {
+    font-size: 1rem;
+  }
+  .workout-list .exercise .set input {
+    width: 40px;
+  }
+  #navbar-main .navbar-collapse {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+  #navbar-main .navbar-collapse .ml-auto {
+    margin-left: unset !important;
+  }
+  #navbar-main .navbar-collapse.show {
+    display: flex;
+  }
+  #navbar-main .dropdown:hover > .dropdown-menu {
+    padding-bottom: 0.5rem;
+    display: block;
+  }
+}
+
+@media (max-width: 1200px) {
+  #settings h1 {
+    padding: 0 !important;
+    margin-top: 0.5rem;
+  }
+  #settings .setting {
+    padding: 0.55rem;
+  }
+  #myplan #collapseThree .card-body .row:first-child .col {
+    font-size: 1rem;
+    text-align: center;
+  }
+  #myplan #collapseThree .card-body .row:first-child .col-1 {
+    padding: 0;
+  }
+  #myplan #collapseThree .card-body button {
+    padding: 0;
+  }
+}
+
+@media only screen and (min-width: 624px) and (max-width: 768px) {
+  #navbar-main #timers {
+    display: flex;
+    flex-wrap: wrap;
+    width: 550px;
+    padding: 0;
+  }
+  #navbar-main #timers .row {
+    flex-direction: column;
+  }
+  #navbar-main #timers .row .col-4,
+  #navbar-main #timers .row .dropdown-item {
+    max-width: initial;
+    padding: 1rem 1.5rem;
+  }
+}

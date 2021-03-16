@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gym Follower | Track Your Performance</title>
+  <!-- Start: custom CSS   -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- <link rel="stylesheet" href="css/mediaQueries.css"> -->
+  <!-- End: custom CSS  -->
+  <link rel="stylesheet" href="css/animate.css">
+  <!-- Start: Font Awesome  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <!-- End: Font Awesome  -->
+  <!-- start: Bootstrap scripts with "defer" -->
+  <script defer src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <!-- End: Bootstrap scripts with "defer" -->
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <!-- Responsive media queries -->
+  <link rel="stylesheet" href="css/responsive.css">
+  <!-- ckeditor -->
+  <script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/inline/ckeditor.js"></script>
+  <!-- App.js  -->
+  <script src="scripts/app.js" defer></script>
+  <!-- favicon -->
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+  <!-- NOTE: modals are in the end of the file -->
+
+  <!-- Start: Sticky Nav Bar  -->
+  <nav id="navbar-main" class="sticky-top navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><i class="fas fa-poll"></i>&nbsp; GymFollower</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-book"></i>&nbsp; My Plan<span
+                class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-clock"></i> Timers
+            </a>
+            <!-- Timers DropDown: Fold to fold all the timers  -->
+            <ul id="timers" class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <!-- notification -->
+              <audio id="notification"></audio>
+              <!-- countdown beep / pre alarm -->
+              <audio src="" id="pre-alarm"></audio>
+              <div class="row">
+                <li id="timer-1" class="col-4 dropdown-item">
+
+                </li>
+                <li id="timer-2" class="col-4 dropdown-item">
+
+                </li>
+                <li id="timer-3" class="col-4 dropdown-item">
+
+                </li>
+              </div>
+              <div class="row">
+                <li id="timer-4" class="col-4 dropdown-item">
+
+                </li>
+                <li id="timer-5" class="col-4 dropdown-item">
+
+                </li>
+                <li id="timer-6" class="col-4 dropdown-item">
+
+                </li>
+              </div>
+              <div class="row last">
+                <li id="timer-7" class="col-4 dropdown-item">
+
+                </li>
+                <li id="timer-8" class="col-4 dropdown-item">
+                </li>
+                <li id="timer-9" class="col-4 dropdown-item">
+                </li>
+              </div>
+              <li class="dropdown-divider"></li>
+              <!-- add Timer and delete timer opens modal -->
+              <div class="timer-actions">
+                <li id="add-timer-btn" data-toggle="modal" data-target="#add-timer-modal"><i class="fas fa-plus"></i>
+                  &nbsp; Add
+                  Timer</li>
+                <li id="delete-timer-btn"><i class="fas fa-minus"></i> &nbsp; Delete Timer</li>
+              </div>
+            </ul>
+          </li>
+        </ul>
+        <!-- Navbar Side Links -->
+          <ul id="navbar-right" class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a href="#tools" class="nav-link"><i class="fas fa-tools"></i> Tools</a>
+            </li>
+            <li id="nav-settings" class="nav-item">
+              <a class="nav-link"><i class="fas fa-user-cog"></i> Settings</a>
+            </li>
+          </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End: Sticky Nav Bar  -->
+  <!-- Start: Settings tab (overlay layer) -->
+  <div class="d-none" id="settings">
+    <div class="container h-100">
+      <h1 class="text-light pt-5 text-center"><i class="fas fa-user-cog"></i> Settings</h1>
+      <div class="settings-box">
+        <div class="bg-light setting">
+          <label for="myweight">my current weight</label>
+          <input maxlength="3" id="myweight" type="text">
+          (kg)
+        </div>
+        <div class="bg-light setting">
+          <label for="barbell-weight-setting">barbell weight</label>
+          <input id="barbell-weight-setting" type="number">
+          (kg)
+        </div>
+        <div id="tens" class="bg-light setting">
+          <label>timer end Alarm sound </label>
+          <select>
+            <option value="1_timer_alert_">Timer Alert 1</option>
+            <option value="2_timer_alert_">Timer Alert 2</option>
+            <option value="3_timer_alert_">Timer Alert 3</option>
+            <option value="4_timer_alert_">Timer Alert 4</option>
+            <option value="5_timer_alert_">Timer Alert 5</option>
+          </select>
+          <button class="ml-1 btn btn-sm btn-primary"><i class="fas fa-volume-up"></i></button>
+
+        </div>
+        <div class="bg-light setting">
+          <label>timer end alarm duration</label>
+          <select>
+            <option value="3_seconds">3 Seconds</option>
+            <option value="5_seconds">5 Second</option>
+            <option value="10_seconds">10 Seconds</option>
+          </select>
+        </div>
+        <div class="bg-light setting">
+          <label>Pre-alarm timing</label>
+          <select>
+            <option value="5">5 Seconds before end</option>
+            <option value="10">10 Seconds before end</option>
+            <option value="15">15 Seconds before end</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-success">Save Settings</button>
+      <button class="btn btn-danger">Close</button>
+    </div>
+  </div>
+  <!-- End: Settings tab (overlay layer) -->
+  <!-- My Plan Tab   -->
+  <div class="d-none animated" id="myplan">
+    <div class="container">
+      <!-- YouTube playlist + Modal -->
+      <div class="py-4" id="music">
+        <h3 class="d-block d-md-inline text-white pt-3"><i class="text-danger fab fa-youtube"></i> YouTube Music Playlists:</h3>
+        <div class="d-block d-md-inline">
+          <a class="playlist btn btn-light" target="_blank" rel="noopener noreferrer">Playlist 1</a>
+          <a class="playlist btn btn-light" target="_blank" rel="noopener noreferrer">Playlist 2</a>
+          <a class="playlist btn btn-light" target="_blank" rel="noopener noreferrer">Playlist 3</a>
+          <a class="btn btn-light" data-toggle='modal' data-target='#setPlaylistModal' target="_blank"
+            rel="noopener noreferrer">Edit</a>
+        </div>
+      </div>
+      <div class="accordion" id="accordionExample">
+        <!-- The Plan  -->
+        <div id="myplan-card" class="card">
+          <div class="card-header" id="headingOne">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+              aria-expanded="true" aria-controls="collapseOne">
+              <h3>
+                Training Schedule <i class="far fa-calendar-alt"></i>
+              </h3>
+            </button>
+          </div>
+
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body p-0">
+              <div id="tp-main">
+                <div class="row d-none d-md-flex" id="tp-days">
+                  <!-- Program (col-1) -->
+                  <div class="col-2">
+                    Program
+                  </div>
+                  <!-- Mon (col-2) -->
+                  <div class="col">
+                    MON
+                  </div>
+                  <!-- Tues (col-3) -->
+                  <div class="col">
+                    TUES
+                  </div>
+                  <!-- Wed (col-4) -->
+                  <div class="col">
+                    WED
+                  </div>
+                  <!-- Thurs (col-5) -->
+                  <div class="col">
+                    THURS
+                  </div>
+                  <!-- Fri (col-6) -->
+                  <div class="col">
+                    FRI
+                  </div>
+                  <!-- Sat (col-7) -->
+                  <div class="col">
+                    SAT
+                  </div>
+                  <!-- Sun (col-8) -->
+                  <div class="col">
+                    SUN
+                  </div>
+
+                </div>
+                <div class="mt-4 ml-2">
+                  <small>* To Make a program your current one click on the program name.</small>
+                  <div>
+                    <small>* Make sure you only have <strong>one</strong> current program. </small>
+                  </div>
+                </div>
+                <div class="mt-2" id="tp-controls">
+                  <button data-toggle="modal" data-target="#add-program-modal" class="btn"><i
+                      class="fas fa-plus-square"></i> Add Program</button>
+                  <button class="btn"><i class="fas fa-minus-square"></i> Delete Program</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Notes -->
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo"
+                aria-expanded="false" aria-controls="collapseTwo">
+                Notes
+              </button>
+            </h5>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+              <div>
+                <div id="editor"></div>
+              </div>
+              <button class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+            </div>
+          </div>
+        </div>
+        <!-- My Workouts -->
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree"
+                aria-expanded="false" aria-controls="collapseThree">
+                My Workouts
+              </button>
+            </h5>
+          </div>
+          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div class="card-body">
+              <!-- table head -->
+              <div class="row">
+                <div class="col-12 col-md-3">Workout Name</div>
+                <div class="col col-3">Exercises</div>
+                <div class="col col-1">Sets</div>
+                <div class="col col-3">Target-reps / Notes</div>
+                <div class="col col-1">Edit</div>
+                <div class="col col-1">Delete</div>
+              </div>
+              <!-- Start insert Workout -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- End: My Plan -->
+  <!-- Tools Tab -->
+  <div class="d-none animated" id="tools">
+    <div class="container w-75">
+      <!-- Lbs To Kg Calculator -->
+      <div id="lbs-to-kg-calc">
+        <h3 class="text-center text-light">Lbs <i class="fas fa-exchange-alt"></i> Kg</h3>
+        <form class="form-inline">
+          <div class="w-100 mx-auto flex-column flex-md-row row">
+            <div class=" col-md-4 col-12 input-group">
+              <input placeholder="Number in Lbs / Pounds" type="number" class="form-control">
+              <div class="input-group-append">
+                <div class="input-group-text">lbs</div>
+              </div>
+            </div>
+            <button tabindex="-1" class="col-12 col-md disabled font-weight-bold btn btn-warning">
+              <i class="fas fa-balance-scale-left"></i>
+              Type To Convert
+              <i class="fas fa-balance-scale-left"></i>
+            </button>
+            <div class="col-md-4 col-12 input-group">
+              <input id="ltkck" placeholder="Number in Kilograms (Kg)" type="number" class="form-control">
+              <div class="input-group-append">
+                <div class="input-group-text">kg</div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- Barbell setup calc -->
+      <div class="my-2" id="barbell-setup-calc">
+        <h3 class="text-center text-light"><i class="fas fa-dumbbell"></i> Barbell setup calculator</h3>
+        <form class="form-inline">
+          <div class="w-100 mx-auto flex-column flex-md-row row">
+            <div class="col-md-4 col-12 input-group">
+              <input placeholder="Weight In Kg" type="number" class="form-control">
+              <div class="input-group-append">
+                <div class="input-group-text">Kg</div>
+              </div>
+            </div>
+            <div class="col-md-4 col-12 input-group">
+              <input value="100" placeholder="Weight Percentage" type="number" class="form-control">
+              <div class="input-group-append">
+                <div class="input-group-text">%</div>
+              </div>
+            </div>
+            <div class="col-md-4 col-12 input-group">
+              <input placeholder="Barbell Weight" type="number" class="form-control">
+              <div class="input-group-append">
+                <div class="input-group-text">BW</div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="mx-auto">
+          <span id="barbell-setup-result-display" class="d-block mx-auto text-center">
+            <span id="result-each-side"></span>
+          </span>
+        </div>
+      </div>
+      <!-- body Weight Exercise Calc -->
+      <div class="mb-2" id="body-weight-exercise-calc">
+        <h3 class="text-center text-light"> Body Weight Exercise Calculator</h3>
+        <form class="form-inline">
+          <div class="mx-auto w-100 row">
+            <div class="calc flex-column flex-md-row">
+            	<div class="col input-group">
+            	  <input placeholder="Added weight in Kg" type="number" class=" form-control">
+            	  <div class="input-group-append">
+            	    <div class="input-group-text">Kg &nbsp; <i class="fas fa-info-circle"></i></div>
+            	  </div>
+            	</div>
+            	<div class="col input-group">
+            	  <input placeholder=" Set percentage" type="number" class=" form-control">
+            	  <div class="input-group-append">
+            	    <div class="input-group-text">% &nbsp; <i class="fas fa-info-circle"></i></div>
+            	  </div>
+            	</div>
+            	<div class="col input-group">
+            	  <select class=" form-control" name="bwec-exercise">
+            	    <option value="0.71">Push-Ups =~ 71% BW</option>
+            	    <option value="0.93">Dips =~ 93% BW</option>
+            	    <option value="0.93">Pull-Ups =~ 93% BW</option>
+            	  </select>
+            	</div>
+            	<div class="col-12 col-md-2 input-group">
+            	  <input placeholder="Your Weight" type="number" class="form-control ">
+            	  <div class="input-group-append">
+            	    <div class="input-group-text">YW &nbsp; <i class="fas fa-info-circle"></i></div>
+            	  </div>
+            	</div>
+            </div>
+          </div>
+        </form>
+        <div class="mx-auto">
+          <button class="btn btn-block btn-warning mx-auto" id="calculate"><i class="fas fa-calculator"></i>
+            Calculate</button>
+          <div id="bwec-result-display" class="d-block mx-auto text-center">
+          </div>
+        </div>
+      </div>
+      <!-- weight by side calc -->
+      <div id="total-weight-calc">
+        <h3 class="text-center text-white">
+          Total weight Calculator
+        </h3>
+        <form class="form-inline">
+          <div class="w-100 flex-column flex-md-row  mx-auto row">
+            <div class="input-group col-12 col-md-6">
+              <input placeholder="Weight on each side..." type="number" class="form-control">
+              <div class="input-group-append">
+                <div class="input-group-text">Kg</div>
+              </div>
+            </div>
+            <div class="input-group col-12 col-md-6">
+              <input placeholder="Barbell Weight" type="number" class="form-control">
+              <div class="input-group-append">
+                <div class="input-group-text">BW &nbsp; <i class="fas fa-info-circle"></i></div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <span id="total-weight-calc-result" class="text-white font-weight-bold d-block mx-auto text-center">
+
+        </span>
+      </div>
+    </div>
+  </div>
+  <!-- End: Tools   -->
+  <!-- Start: Create New Workout Feature   -->
+  <div id="create-new-workout">
+    <h1 class="font-weight-bold display-4 text-primary text-center">Create new workout</h1>
+    <div class="container">
+      <form>
+        <input maxlength="50" id="workout-name" class="form-control" type="text" placeholder="Workout Name...">
+        <!-- Start: exercise Rows  -->
+        <div id="form-row1" class="form-row">
+          <div class="col">
+            <input maxlength="40" id="exercise-name-input-1" type="text" class="form-control"
+              placeholder="Exercise Name">
+          </div>
+          <div class="col">
+            <input maxlength="40" id="target-reps-input-1" type="text" class="form-control"
+              placeholder="Reps / Notes">
+          </div>
+          <div class="col">
+            <input maxlength="40" id="sets-input-1" type="number" min="1" class="form-control"
+              placeholder="Amount Of Sets">
+          </div>
+        </div>
+        <!-- ---------------- -->
+        <div id="form-row2" class="form-row">
+          <div class="col">
+            <input maxlength="40" id="exercise-name-input-2" type="text" class="form-control"
+              placeholder="Exercise Name">
+          </div>
+          <div class="col">
+            <input maxlength="40" id="target-reps-input-2" type="text" class="form-control"
+              placeholder="Reps / Notes">
+          </div>
+          <div class="col">
+            <input id="sets-input-2" type="number" min="1" class="form-control" placeholder="Amount Of Sets">
+          </div>
+        </div>
+        <!-- ---------------- -->
+        <div id="form-row3" class="form-row">
+          <div class="col">
+            <input maxlength="40" id="exercise-name-input-3" type="text" class="form-control"
+              placeholder="Exercise Name">
+          </div>
+          <div class="col">
+            <input maxlength="40" id="target-reps-input-3" type="text" class="form-control"
+              placeholder="Reps / Notes">
+          </div>
+          <div class="col">
+            <input id="sets-input-3" type="number" min="1" class="form-control" placeholder="Amount Of Sets">
+          </div>
+        </div>
+        <!-- End: exercise Rows  -->
+      </form>
+      <button id="add-exercise" class="my-3 btn btn-primary">Add Exercise <i class="fas fa-plus-square"></i></button>
+      <button id="subtract-exercise" class="my-3 btn btn-primary">Subtract Exercise <i
+          class="fas fa-minus-square"></i></button>
+      <div class="font-weight-bold col-4 float-right"><span>Total Sets:</span>
+        <span id="total-new-workout-sets">0</span>
+      </div>
+      <button id="add-workout" class="btn btn-success btn-block mx-auto">Add Workout <i
+          class="fas fa-plus-square"></i></button>
+    </div>
+
+  </div>
+  <!-- End: Create New Workout Feature   -->
+  <!-- Start: Search Bar  -->
+  <hr>
+  <div id="search" class="w-75 container">
+    <h3 class="text-center text-muted">Filter Workouts <i class="fas fa-dumbbell"></i></h3>
+    <div class="input-group mb-3">
+      <input class="form-control shadow-sm" type="text" placeholder="Search for workouts...">
+      <div class="input-group-append">
+        <button class="px-5 btn btn-primary"><i class="fas fa-search"></i></button>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <!-- End: Search Bar  -->
+  <!-- Start: -Do Not Delete- Workout Example  -->
+  <div id="workout-0">
+  </div>
+  <!-- End: Workout Example  -->
+  <!-- Start: Modals -->
+  <!-- Add Program Modal -->
+  <div id="add-program-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="far fa-calendar-alt"></i> Create New Program</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5 class="d-inline text-secondary">Program Name:</h5>
+          <small class="ml-3">This is my current program
+            <input type="checkbox" id="currentP"></small>
+          <input id="pname" maxlength="40" class="mb-2 mt-2 form-control" type="text">
+          <div class="px-3 row">
+            <div class="wortkout-inputs col">
+              <label>Monday Workout: </label>
+              <div class="autocomplete">
+                <!-- wid = workout input day -->
+                <input id="wid1" class="workout-input" type="text">
+              </div>
+              <label>Tuesday Workout: </label>
+              <div class="autocomplete">
+                <input id="wid2" class="workout-input" type="text">
+              </div>
+              <label>Wednesday Workout: </label>
+              <div class="autocomplete">
+                <input id="wid3" class="workout-input" type="text">
+              </div>
+              <label>Thursday Workout: </label>
+              <div class="autocomplete">
+                <input id="wid4" class="workout-input" type="text">
+              </div>
+              <label>Friday Workout: </label>
+              <div class="autocomplete">
+                <input id="wid5" class="workout-input" type="text">
+              </div>
+              <label>Saturday Workout: </label>
+              <div class="autocomplete">
+                <input id="wid6" class="workout-input" type="text">
+              </div>
+              <label>Sunday Workout: </label>
+              <div class="autocomplete">
+                <input id="wid7" class="workout-input" type="text">
+              </div>
+            </div>
+            <div class="notes col">
+              <label>Notes: </label>
+              <input id="notes-1" maxlength="40" type="text">
+              <label>Notes: </label>
+              <input id="notes-2" maxlength="40" type="text">
+              <label>Notes: </label>
+              <input id="notes-3" maxlength="40" type="text">
+              <label>Notes: </label>
+              <input id="notes-4" maxlength="40" type="text">
+              <label>Notes: </label>
+              <input id="notes-5" maxlength="40" type="text">
+              <label>Notes: </label>
+              <input id="notes-6" maxlength="40" type="text">
+              <label>Notes: </label>
+              <input id="notes-7" maxlength="40" type="text">
+            </div>
+            <div class="rests col">
+              <label>Rest Day: </label>
+              <div>
+                <input id="r1" maxlength="40" type="checkbox">
+              </div>
+              <label>Rest Day: </label>
+              <div>
+                <input id="r2" maxlength="40" type="checkbox">
+              </div>
+              <label>Rest Day: </label>
+              <div>
+                <input id="r3" maxlength="40" type="checkbox">
+              </div>
+              <label>Rest Day: </label>
+              <div>
+                <input id="r4" maxlength="40" type="checkbox">
+              </div>
+              <label>Rest Day: </label>
+              <div>
+                <input id="r5" maxlength="40" type="checkbox">
+              </div>
+              <label>Rest Day: </label>
+              <div>
+                <input id="r6" maxlength="40" type="checkbox">
+              </div>
+              <label>Rest Day: </label>
+              <div>
+                <input id="r7" maxlength="40" type="checkbox">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button id="save-program" type="button" class="btn btn-primary">Save Program</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Add Timer Modal -->
+  <div class="modal" id="add-timer-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-clock"></i> Add Timer</h5>
+          <button class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form onsubmit="return false">
+            <div class="col-auto">
+              <label class="sr-only" for="timer-name"></label>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">Timer Name</div>
+                </div>
+                <input maxlength="22" type="text" class="form-control" id="timer-name" placeholder="Timer Name">
+              </div>
+            </div>
+            <!-- <input maxlength="22" class="form-control mr-2" type="text" id="timer-name" placeholder="Timer Name"> -->
+            <div id="durations" class="col-auto">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">H</div>
+                </div>
+                <input value="0" class="form-control" type="number" id="hr" placeholder="hours">
+              </div>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">M</div>
+                </div>
+                <input class="form-control" type="number" id="mn" placeholder="minutes">
+              </div>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">S</div>
+                </div>
+                <input class="form-control" type="number" id="sc" placeholder="seconds">
+              </div>
+            </div>
+            <small class="d-block ml-2 validation-notes"></small>
+            <small class="ml-2 mt-3">* To change timer go to <a href>settings</a></small>
+            <div class="w-100 d-flex bg-white py-2 justify-content-end">
+              <button type="submit" id="modal-add-timer" class="btn btn-success">Add Timer</button>
+              <button class="btn btn-danger mx-2" data-dismiss="modal">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- YouTube playlist url Modal -->
+  <div class="modal" id="setPlaylistModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Your Playlists</h5>
+          <button class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label>Playlist 1 URL:</label>
+              <input type="url" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Playlist 2 URL:</label>
+              <input type="url" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Playlist 3 URL:</label>
+              <input type="url" class="form-control">
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-success" data-dismiss="modal">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End: Modals -->
+</body>
+
+</html>
