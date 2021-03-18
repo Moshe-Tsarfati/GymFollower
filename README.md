@@ -41,7 +41,7 @@ In the workout window below the workout name you'll see the "workout tools bar".
 **Auto Generated warm-ups:**
 GymFollower helps you to create a typical standard warm-up easily.
 Log the **first set** by typing the weight and the reps. Then when the mouse cursor is on the **reps** input (input focus) click `Enter`, The standard warm up will be generated automatically.
-NOTE: Only works when both weight and reps  input is filled. 
+NOTE: Only works when both weight and reps  input are filled. 
 
 **Auto Generated Total volume:**
 On the bottom of the workout window the current total workout volume is auto-calculated.
